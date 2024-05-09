@@ -40,8 +40,4 @@ class DriverListView(generic.ListView):
 
 class DriverDetailView(generic.DetailView):
     model = Driver
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["cars"] = self.get_object().cars.select_related("manufacturer")
-        return context
+    queryset = Driver.objects.prefetch_related("cars__manufacturer")
